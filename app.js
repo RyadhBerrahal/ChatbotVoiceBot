@@ -1,3 +1,4 @@
+const http = require('http');
 var createError = require('http-errors');
 var express = require('express');
 var passport = require('passport')
@@ -82,6 +83,14 @@ socket.fromClient();
 app.use(function(req, res, next) {
   next(createError(404));
 });
+const port=process.env.PORT || 3000
+app.set('port', port);
+
+server.listen(port,() => {
+
+  console.log(`Server running at port `+port);
+  
+  });
 
 // error handler
 app.use(function(err, req, res, next) {
