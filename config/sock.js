@@ -1,13 +1,14 @@
-var express = require('express');
-    app = express();
-    server = require('http').createServer(app);
-    io = require('socket.io').listen(server);
+var app = require('express')();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
+
 var api = require('./api');
 
 var conn = function() {
   console.log("this is nice");
 
-  server.listen(process.env.PORT || 3000);
+  server.listen(8010);
+
   app.get('/', function (req, res) {
     res.sendfile(__dirname + '/index.html');
   });

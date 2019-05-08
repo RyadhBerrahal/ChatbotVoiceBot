@@ -1,5 +1,5 @@
 var botui = new BotUI('api-bot');
-var socket = io.connect('https://damp-plateau-30009.herokuapp.com:3000');
+var socket = io.connect('http://localhost:8010');
 // read the BotUI docs : https://docs.botui.org/
 
 
