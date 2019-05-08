@@ -1,7 +1,8 @@
 var app = require('express')();
 var server = require('http').Server(app);
-var io = require('socket.io')(server);
-
+//var io = require('socket.io')(server);
+var socketIO=require('socket.io');
+const io = socketIO(server);
 var api = require('./api');
 
 var conn = function() {
@@ -13,11 +14,6 @@ var conn = function() {
     res.sendfile(__dirname + '/index.html');
   });
 };
-io.configure(function () { 
-  io.set("transports", ["xhr-polling"]); 
-  io.set("polling duration", 10); 
-});
-socket = new io.Socket();
 
 var fromClient = function() {
 
