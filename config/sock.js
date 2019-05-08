@@ -13,6 +13,11 @@ var conn = function() {
     res.sendfile(__dirname + '/index.html');
   });
 };
+io.configure(function () { 
+  io.set("transports", ["xhr-polling"]); 
+  io.set("polling duration", 10); 
+});
+socket = new io.Socket();
 
 var fromClient = function() {
 
