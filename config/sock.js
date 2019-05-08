@@ -1,8 +1,7 @@
 var app = require('express')();
 var server = require('http').Server(app);
-//var io = require('socket.io')(server);
-var socketIO=require('socket.io');
-const io = socketIO(server);
+var io = require('socket.io')(server);
+
 var api = require('./api');
 
 var conn = function() {
