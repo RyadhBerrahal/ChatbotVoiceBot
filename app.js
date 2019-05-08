@@ -9,6 +9,7 @@ var config = require('./config/DbConf');
 const url = config.mongoUrl;
 mongoose.connect(url)
 var socket = require('./config/sock');
+var io = require('socket.io').listen(app),
 var cors = require('cors')
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -40,6 +41,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+io.configure(function () { 
+  io.set("transports", ["xhr-polling"]); 
+  io.set("polling duration", 10); 
+});
 
 ///////// Connected user ///////////////
 var session = require("express-session"),
@@ -74,7 +79,13 @@ app.get('/express_backend', (req, res) => {
 //     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 //     next();
 // });
-
+io.sockets.on('connection', function (socket) {
+  io.sockets.emit('status', { status: status }); // note the use of io.sockets to emit but socket.on to listen
+  socket.on('reset', function (data) {
+    status = "War is imminent!";
+    io.sockets.emit('status', { status: status });
+  });
+});
 socket.conn();
 socket.fromClient();
 
